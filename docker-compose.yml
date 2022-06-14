@@ -1,0 +1,21 @@
+version: '3.5'
+services:
+  nginx-proxy:
+    image: nginx:1.20.1
+    container_name: nginx-proxy
+    hostname: nginx-proxy
+    restart: on-failure:5
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /DATA/DevOps/proxy-cfg/devops.conf:/etc/nginx/devops.conf:ro
+      - /DATA/DevOps/proxy-cfg/nginx.conf:/etc/nginx/nginx.conf:ro
+      - /DATA/DevOps/proxy-cfg/cnx-certs/:/usr/share/cnx-certs/:ro
+    networks:
+      - nginx-network
+
+networks:
+  nginx-network:
+    external: true
+    name: devops-network
